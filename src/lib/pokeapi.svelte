@@ -2,9 +2,14 @@
 import { error } from "@sveltejs/kit";
 import { onMount } from 'svelte';
    let curl: Promise<any>;
+
+// function randomPokemon() {
+//        const randomID = Math.floor(Math.random() * 1) + 1;  
+//                          }
+
     onMount(() => {
         
-         curl = fetch("https://pokeapi.co/api/v2/pokemon?limit=151").then((pokedata) => pokedata.json());
+         curl = fetch(`https://pokeapi.co/api/v2/pokemon?limit=151`).then((pokedata) => pokedata.json());
     });
 
 
@@ -32,6 +37,7 @@ import { onMount } from 'svelte';
     <div>{error.message}</div>
 
 {/await}
+
 
 
 <style>
