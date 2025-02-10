@@ -8,7 +8,7 @@ import KeepScore from "$lib/keepScore.svelte";
 
 <TimeComp />
 <KeepScore />
-<Pokeapi />
+
 
 
 <h1>Welcome to SvelteKit</h1>

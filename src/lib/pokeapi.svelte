@@ -1,18 +1,26 @@
 <script lang="ts">
 import { error } from "@sveltejs/kit";
 import { onMount } from 'svelte';
-   let curl: Promise<any>;
+export let curl: Promise<any>;
+export let pokemonName: string = ""; // Store Pokémon name
+export const randomID = Math.floor(Math.random() * 151) + 1; // Random Pokémon ID
 
-
-const randomID = Math.floor(Math.random() * 151) + 1;  
-                         
-
-    onMount(() => {
-        
-         curl = fetch(`https://pokeapi.co/api/v2/pokemon/${randomID}`).then((pokedata) => pokedata.json());
-    });
-
-    
+onMount(() => {
+    curl = fetch(`https://pokeapi.co/api/v2/pokemon/${randomID}`)
+        .then((pokedata) => pokedata.json())
+        .then((results) => {
+            if (results.forms && results.forms.length > 0) {
+                pokemonName = results.forms[0].name; // Store first form's name
+                console.log("Fetched Pokémon name:", pokemonName); // Debugging
+            } else {
+                console.error("No forms found for this Pokémon.");
+            }
+            return results;
+        })
+        .catch((err) => {
+            console.error("Error fetching Pokémon:", err);
+        });
+});
 </script>
 
 {#await curl}

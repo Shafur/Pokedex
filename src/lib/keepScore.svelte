@@ -5,26 +5,40 @@
     let count =$state(0);
     let src = "https://media.tenor.com/0ag0MVXUaQEAAAAM/team-rocket-blasting-off-again.gif";
     let userInput = $state("");
+    let pokeName = "";
+    let randomID = Math.floor(Math.random() * 151) + 1;
 
-    function increment() {
-        count += 1;
-    }
+
 
     function handleKeyDown(event) {
     if (event.key === "Enter") {
-      userInput = ""; // Optional: Clears the input field
+        console.log("userinput:", userInput);
+        console.log("pokemonname:", pokeName)
+
+        if (!pokeName) {
+            console.log("nope.");
+            return;
+        }
+        if (userInput.toLowerCase() === pokeName.toLowerCase()) {
+            count += 1;
+            randomID = Math.floor(Math.random() * 151) + 1;
+        }
+        userInput = "";
     }
-  }
+       // Optional: Clears the input field
+    }
+  
+
 
 </script>
-
-<input bind:value={userInput} onkeydown={handleKeyDown}/>
+<Pokeapi bind:pokemonName={pokeName} bind:randomID={randomID}/>
+<input type ="text" bind:value={userInput} onkeydown={handleKeyDown}/>
 <h2></h2>
 
 
 
 
-<button onclick={increment}>
+<button>
     Correct: {count}
 </button>
 
