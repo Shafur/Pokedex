@@ -1,11 +1,12 @@
 <script lang="ts">
 import { error } from "@sveltejs/kit";
 import { onMount } from 'svelte';
-export let curl: Promise<any>;
-export let pokemonName: string = ""; // Store Pokémon name
-export const randomID = Math.floor(Math.random() * 151) + 1; // Random Pokémon ID
+ let curl = $state();
+ let {pokemonName = $bindable(), randomID = $bindable()} = $props(); 
 
-onMount(() => {
+
+$effect(() => {
+    console.log(pokemonName);
     curl = fetch(`https://pokeapi.co/api/v2/pokemon/${randomID}`)
         .then((pokedata) => pokedata.json())
         .then((results) => {
@@ -20,6 +21,7 @@ onMount(() => {
         .catch((err) => {
             console.error("Error fetching Pokémon:", err);
         });
+
 });
 </script>
 
@@ -33,10 +35,10 @@ onMount(() => {
        <div> 
             <img 
             class="hidden-pokemon"
-            src={`https://img.pokemondb.net/sprites/black-white/normal/${pokemon.name}.png`}
+            src={`https://img.pokemondb.net/sprites/black-white/anim/normal/${pokemon.name}.gif`}
             alt={pokemon.name}
             />
-            <h3>{pokemon.name}</h3>
+            <h3></h3>
         </div>
      {/each}
 
